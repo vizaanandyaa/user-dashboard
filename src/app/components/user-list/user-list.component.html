@@ -1,0 +1,46 @@
+<!-- Search + meta -->
+<div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-4">
+  <app-search-box (termChange)="setSearch($event)"></app-search-box>
+  <div class="text-sm text-gray-600" *ngIf="(view$ | async) as v">
+    <span *ngIf="v.term">Filtered: </span>{{ v.total }} users
+  </div>
+</div>
+
+<!-- Grid + Detail (responsive: col to row) -->
+<!-- Grid + Detail -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+  <div class="lg:col-span-2">
+
+    <!-- v: data tampilan; jika belum ada, tampilkan #loading -->
+    <ng-container *ngIf="(view$ | async) as v; else loading">
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+        <app-user-card
+          *ngFor="let u of v.slice"
+          [user]="u"
+          (selected)="selectUser($event)">
+        </app-user-card>
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex items-center justify-center gap-2 mt-4">
+        <button class="px-3 py-1 rounded border disabled:opacity-40"
+                (click)="go(v.page-1)" [disabled]="v.page===1">Prev</button>
+        <span class="text-sm">Page {{ v.page }} / {{ v.pages }}</span>
+        <button class="px-3 py-1 rounded border disabled:opacity-40"
+                (click)="go(v.page+1)" [disabled]="v.page===v.pages">Next</button>
+      </div>
+    </ng-container>
+
+    <ng-template #loading>
+      <div class="flex justify-center py-10">
+        <div class="spinner text-blue-600"></div>
+      </div>
+    </ng-template>
+
+  </div>
+
+  <div class="lg:col-span-1">
+    <app-user-detail [user]="(usersSvc.userDetail$ | async)"></app-user-detail>
+  </div>
+</div>
+

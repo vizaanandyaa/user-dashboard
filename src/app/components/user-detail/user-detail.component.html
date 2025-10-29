@@ -1,0 +1,18 @@
+<div class="bg-white rounded-xl shadow p-4 border" *ngIf="user; else empty">
+  <h2 class="text-xl font-bold mb-2">User Detail</h2>
+  <div class="space-y-1 text-sm">
+    <div><span class="font-semibold">Name:</span> {{ user?.name }}</div>
+    <div><span class="font-semibold">Username:</span> {{ user?.username }}</div>
+    <div><span class="font-semibold">Email:</span> {{ user?.email }}</div>
+    <div><span class="font-semibold">Phone:</span> {{ user?.phone }}</div>
+    <div><span class="font-semibold">Website:</span> {{ user?.website }}</div>
+    <div><span class="font-semibold">Company:</span> {{ user?.company?.name }}</div>
+    <div><span class="font-semibold">Address:</span>
+      {{ user?.address?.street }}, {{ user?.address?.suite }},
+      {{ user?.address?.city }} {{ user?.address?.zipcode }}
+    </div>
+  </div>
+</div>
+<ng-template #empty>
+  <div class="bg-white rounded-xl shadow p-6 text-gray-500 border">Select a user to see details</div>
+</ng-template>
