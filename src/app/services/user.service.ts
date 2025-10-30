@@ -8,13 +8,12 @@ const BASE = 'https://jsonplaceholder.typicode.com';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  // triggers
+
   private reload$ = new BehaviorSubject<void>(undefined);
   private selectedId$ = new BehaviorSubject<number | null>(null);
 
   constructor(private http: HttpClient, private notify: NotificationService) {}
 
-  /** All users (cached) */
   users$ = this.reload$.pipe(
     switchMap(() =>
       this.http.get<User[]>(`${BASE}/users`).pipe(
@@ -34,7 +33,6 @@ export class UserService {
   selectUser(id: number) { this.selectedId$.next(id); }
   selectedIdStream$ = this.selectedId$.asObservable();
 
-  /** Detail by selected id */
   userDetail$ = this.selectedId$.pipe(
     switchMap(id => {
       if (id == null) return of(null);

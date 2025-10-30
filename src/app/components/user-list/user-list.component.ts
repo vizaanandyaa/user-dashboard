@@ -18,7 +18,6 @@ export class UserListComponent implements OnInit {
   private page$ = new BehaviorSubject<number>(1);
   pageSize = 6;
 
-  // deklarasi saja dulu
   view$!: Observable<{ slice: any[]; page: number; pages: number; total: number; term: string }>;
 
   constructor(public usersSvc: UserService) {}

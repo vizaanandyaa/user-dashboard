@@ -15,7 +15,6 @@ export class NotificationService {
 
   show(message: string, type: NoticeType = 'info') {
     this._notice$.next({ message, type });
-    // auto hide after 3s
     setTimeout(() => this.clear(), 3000);
   }
   clear() { this._notice$.next(null); }
